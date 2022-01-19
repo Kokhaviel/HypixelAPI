@@ -15,19 +15,14 @@
 from utils import checkJsonNullValue
 
 
-class APIKey:
+class RequestException:
 
     def __init__(self, json):
+        self.success = checkJsonNullValue(json, 'success')
+        self.cause = checkJsonNullValue(json, 'cause')
 
-        true = True
-        false = False
 
-        self.success = checkJsonNullValue(eval(json), 'success')
+class HypixelAPIException(Exception):
 
-        record = checkJsonNullValue(eval(json), 'record')
-
-        self.key = checkJsonNullValue(eval(record), 'key')
-        self.owner = checkJsonNullValue(eval(record), 'owner')
-        self.limit = checkJsonNullValue(eval(record), 'limit', 120)
-        self.queries_in_past_minute = checkJsonNullValue(eval(record), 'queriesInPastMin', 0)
-        self.total_queries = checkJsonNullValue(eval(record), 'totalQueries', 0)
+    def __init__(self, message="An error occurred into HypixelAPI Requests"):
+        self.message = message

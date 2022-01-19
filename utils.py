@@ -12,27 +12,8 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-import requests
-
-from key import APIKey
-
-
-class HypixelAPI:
-    api_key = ""
-    base_url = "https://api.hypixel.net/"
-
-    def __init__(self, api_key):
-        self.api_key = api_key
-
-    def getAPIKeyInfo(self):
-        if self.api_key == "":
-            raise HypixelAPIException("You Must Defined an API Key with __init__")
-        json = requests.get(self.base_url + "key", params={"key": self.api_key}).json()
-        return APIKey(json)
-
-
-class HypixelAPIException(Exception):
-
-    def __init__(self, message):
-        self.message = message
-
+def checkJsonNullValue(json, value, default_return=""):
+    if value in json:
+        return str(json[value])
+    else:
+        return default_return

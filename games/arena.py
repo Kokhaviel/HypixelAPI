@@ -1,0 +1,35 @@
+#  Copyright (c) 2022 Kokhaviel.
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+
+from utils import checkJsonNullValue
+
+
+class Arena:
+
+    def __init__(self, json):
+        self.coins = checkJsonNullValue(eval(json), 'coins')
+        self.coins_spent = checkJsonNullValue(eval(json), 'coins_spent')
+        self.keys = checkJsonNullValue(eval(json), 'keys')
+        self.offensive = checkJsonNullValue(eval(json), 'offensive')
+        self.cosmetics = checkJsonNullValue(eval(json), 'packages')
+        self.utility = checkJsonNullValue(eval(json), 'utility')
+        self.support = checkJsonNullValue(eval(json), 'support')
+        self.ultimate = checkJsonNullValue(eval(json), 'ultimate')
+        self.selected_sword = checkJsonNullValue(eval(json), 'selected_sword')
+        self.wins = checkJsonNullValue(eval(json), 'wins')
+        self.active_rune = checkJsonNullValue(eval(json), 'active_rune')
+        self.active_melee_trail = checkJsonNullValue(eval(json), 'active_melee_trail')
+        self.prefix_color = checkJsonNullValue(eval(json), 'prefix_color')
+        self.active_kill_effect = checkJsonNullValue(eval(json), 'active_kill_effect')
+        self.hat = checkJsonNullValue(eval(json), 'hat')

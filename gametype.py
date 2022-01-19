@@ -13,10 +13,6 @@
 #  limitations under the License.
 
 class Games:
-    type_name = ""
-    db_name = ""
-    clean_name = ""
-    game_id = 0
 
     def __init__(self, type_name, db_name, clean_name, game_id):
         self.type_name = type_name

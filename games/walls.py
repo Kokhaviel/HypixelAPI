@@ -1,4 +1,4 @@
-#  Copyright (c) 2021 Kokhaviel.
+#  Copyright (c) 2022 Kokhaviel.
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -15,19 +15,13 @@
 from utils import checkJsonNullValue
 
 
-class APIKey:
+class Walls:
 
     def __init__(self, json):
-
-        true = True
-        false = False
-
-        self.success = checkJsonNullValue(eval(json), 'success')
-
-        record = checkJsonNullValue(eval(json), 'record')
-
-        self.key = checkJsonNullValue(eval(record), 'key')
-        self.owner = checkJsonNullValue(eval(record), 'owner')
-        self.limit = checkJsonNullValue(eval(record), 'limit', 120)
-        self.queries_in_past_minute = checkJsonNullValue(eval(record), 'queriesInPastMin', 0)
-        self.total_queries = checkJsonNullValue(eval(record), 'totalQueries', 0)
+        self.kills = checkJsonNullValue(eval(json), 'kills')
+        self.coins = checkJsonNullValue(eval(json), 'coins')
+        self.losses = checkJsonNullValue(eval(json), 'losses')
+        self.deaths = checkJsonNullValue(eval(json), 'deaths')
+        self.cosmetics = checkJsonNullValue(eval(json), 'packages')
+        self.wins = checkJsonNullValue(eval(json), 'wins')
+        self.assists = checkJsonNullValue(eval(json), 'assists')

@@ -15,19 +15,8 @@
 from utils import checkJsonNullValue
 
 
-class APIKey:
+class Mojang:
 
     def __init__(self, json):
-
-        true = True
-        false = False
-
-        self.success = checkJsonNullValue(eval(json), 'success')
-
-        record = checkJsonNullValue(eval(json), 'record')
-
-        self.key = checkJsonNullValue(eval(record), 'key')
-        self.owner = checkJsonNullValue(eval(record), 'owner')
-        self.limit = checkJsonNullValue(eval(record), 'limit', 120)
-        self.queries_in_past_minute = checkJsonNullValue(eval(record), 'queriesInPastMin', 0)
-        self.total_queries = checkJsonNullValue(eval(record), 'totalQueries', 0)
+        self.name = checkJsonNullValue(eval(json), 'name')
+        self.uuid = checkJsonNullValue(eval(json), 'id')
