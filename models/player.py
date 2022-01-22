@@ -13,7 +13,7 @@
 #  limitations under the License.
 from level import Level
 from utils import checkJsonNullValue
-from stats import Stats
+from models.stats import Stats
 
 
 class Player:

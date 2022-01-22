@@ -42,16 +42,18 @@ def clear_one_hour_cache():
 
     cache_keys = cache_update_contents.keys()
 
-    for key in cache_keys:
+    for key in list(cache_keys):
         now = get_timestamp_as_millis()
         if now - int(cache_update_contents[key]) > 3600000:
             try:
-                os.remove(cache_dir + "/.hypixel-api/" + key + ".json")
+                os.remove(cache_dir + key + ".json")
                 del cache_update_contents[key]
             except FileNotFoundError:
-                raise HypixelAPIException('An error occurred using the cache system')
+                raise HypixelAPIException('An error occurred using the cache system : ' + cache_dir + key + ".json")
             finally:
-                cache_file.write(str(cache_update_contents))
+                cache_file.truncate(0)
+                cache_file.seek(0)
+                cache_file.write(str(cache_update_contents).replace("\'", "\""))
                 cache_file.close()
 
 
@@ -63,17 +65,19 @@ def invalidate_five_minutes_cache(cache_name):
 
     now = get_timestamp_as_millis()
 
-    if not os.path.exists(cache_dir + "/.hypixel-api/" + cache_name + ".json"):
+    if not os.path.exists(cache_dir + cache_name + ".json"):
         return
 
     if now - int(cache_update_contents[cache_name]) > 300000:
         try:
-            os.remove(cache_dir + "/.hypixel-api/" + cache_name + ".json")
+            os.remove(cache_dir + cache_name + ".json")
             del cache_update_contents[cache_name]
         except FileNotFoundError:
             raise HypixelAPIException('An error occurred using the cache system')
         finally:
-            cache_file.write(str(cache_update_contents))
+            cache_file.truncate(0)
+            cache_file.seek(0)
+            cache_file.write(str(cache_update_contents).replace("\'", "\""))
             cache_file.close()
 
 
@@ -83,7 +87,7 @@ def clean_cache():
 
     for file in cache_files:
         if file == 'update.json':
-            return
+            continue
         os.remove(cache_dir + file)
 
     cache_update = cache_dir + "update.json"
@@ -92,10 +96,12 @@ def clean_cache():
 
     cache_keys = cache_update_contents.keys()
 
-    for key in cache_keys:
+    for key in list(cache_keys):
         del cache_update_contents[key]
 
-    cache_file.write(str(cache_update_contents))
+    cache_file.truncate(0)
+    cache_file.seek(0)
+    cache_file.write(str(cache_update_contents).replace("\'", "\""))
     cache_file.close()
 
 
@@ -114,6 +120,7 @@ def create_cache(cache_name, cache_contents):
         cache_file_write = open(cache_file, 'r+')
         cache_file_write.write(str(cache_contents))
         cache_update_contents[cache_name] = get_timestamp_as_millis()
+        cache_file_update.truncate(0)
         cache_file_update.seek(0)
         cache_file_update.write(str(cache_update_contents).replace("\'", "\""))
         cache_file_write.close()

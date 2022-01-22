@@ -12,27 +12,27 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-from games.arcade import Arcade
-from games.arena import Arena
-from games.battleground import BattleGround
-from games.bedwars import Bedwars
-from games.build_battle import BuildBattle
-from games.duels import Duels
-from games.gingerbread import GingerBread
-from games.legacy import Legacy
-from games.mcgo import MCGO
-from games.megawalls import MegaWalls
-from games.murdermystery import MurderMystery
-from games.paintball import Paintball
-from games.pit import Pit
-from games.quake import Quake
-from games.skywars import Skywars
-from games.smash import Smash
-from games.speeduhc import SpeedUHC
-from games.tnt import TNTGames
-from games.uhc import UHC
-from games.vampirez import VampireZ
-from games.walls import Walls
+from models.games.arcade import Arcade
+from models.games.arena import Arena
+from models.games.battleground import BattleGround
+from models.games.bedwars import Bedwars
+from models.games.build_battle import BuildBattle
+from models.games.duels import Duels
+from models.games.gingerbread import GingerBread
+from models.games.legacy import Legacy
+from models.games.mcgo import MCGO
+from models.games.megawalls import MegaWalls
+from models.games.murdermystery import MurderMystery
+from models.games.paintball import Paintball
+from models.games.pit import Pit
+from models.games.quake import Quake
+from models.games.skywars import Skywars
+from models.games.smash import Smash
+from models.games.speeduhc import SpeedUHC
+from models.games.tnt import TNTGames
+from models.games.uhc import UHC
+from models.games.vampirez import VampireZ
+from models.games.walls import Walls
 
 from utils import checkJsonNullValue
 

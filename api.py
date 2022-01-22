@@ -17,15 +17,16 @@ import requests
 import cache
 from error import HypixelAPIException
 from error import RequestException
-from key import APIKey
-from mojang import Mojang
-from player import Player
+from models.friends import Friends
+from models.key import APIKey
+from models.mojang import Mojang
+from models.player import Player
 from pathlib import Path
 
 cache_dir = str(Path.home()) + "/.hypixel-api/"
 
 
-def getMojangUUID(player):
+def get_mojang_UUID(player):
     url = "https://api.mojang.com/users/profiles/minecraft/" + player
     request_json = get_no_cache(url)
     return Mojang(request_json)
@@ -34,13 +35,13 @@ def getMojangUUID(player):
 def fetch(url, file_name):
     request = requests.get(url)
     json = request.text
-    if validateStatusCode(request):
+    if validate_status_code(request):
         cache.create_cache(file_name, json)
 
 
 def get_no_cache(url):
     request = requests.get(url)
-    if validateStatusCode(request):
+    if validate_status_code(request):
         return request.text
 
 
@@ -64,7 +65,7 @@ class HypixelAPI:
         if self.api_key == "":
             raise HypixelAPIException("API Key Data : You Must Defined an API Key with __init__")
 
-    def getAPIKeyInfo(self):
+    def get_API__key_info(self):
         file_name = "key-" + self.api_key
         cache.invalidate_five_minutes_cache(file_name)
 
@@ -74,18 +75,27 @@ class HypixelAPI:
             url = "https://api.hypixel.net/key?key=" + self.api_key
             return APIKey(fetch_and_get(url, file_name))
 
-    def getPlayer(self, player):
-        file_name = "player-" + getMojangUUID(player).uuid
+    def get_player(self, player):
+        file_name = "player-" + get_mojang_UUID(player).uuid
         cache.invalidate_five_minutes_cache(file_name)
 
         if os.path.exists(cache_dir + file_name + ".json"):
             return Player(get_from_cache(file_name))
         else:
-            url = "https://api.hypixel.net/player?uuid=" + getMojangUUID(player).uuid + "&key=" + self.api_key
+            url = "https://api.hypixel.net/player?uuid=" + get_mojang_UUID(player).uuid + "&key=" + self.api_key
             return Player(fetch_and_get(url, file_name))
 
+    def get_friends(self, player):
+        file_name = "friends-" + get_mojang_UUID(player).uuid
+        cache.invalidate_five_minutes_cache(file_name)
+        if os.path.exists(cache_dir + file_name + ".json"):
+            return Friends(get_from_cache(file_name))
+        else:
+            url = "https://api.hypixel.net/friends?uuid=" + get_mojang_UUID(player).uuid + "&key=" + self.api_key
+            return Friends(fetch_and_get(url, file_name))
 
-def validateStatusCode(request):
+
+def validate_status_code(request):
 
     if request.status_code == 403:
         raise HypixelAPIException(HypixelAPIException("An error occurred while requestion api.hypixel.net : Forbidden"))
