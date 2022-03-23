@@ -21,6 +21,7 @@ from models.friends import Friends
 from models.key import APIKey
 from models.mojang import Mojang
 from models.player import Player
+from models.recent import RecentGames
 from pathlib import Path
 
 cache_dir = str(Path.home()) + "/.hypixel-api/"
@@ -65,7 +66,7 @@ class HypixelAPI:
         if self.api_key == "":
             raise HypixelAPIException("API Key Data : You Must Defined an API Key with __init__")
 
-    def get_API__key_info(self):
+    def get_api_key_info(self):
         file_name = "key-" + self.api_key
         cache.invalidate_five_minutes_cache(file_name)
 
@@ -93,6 +94,15 @@ class HypixelAPI:
         else:
             url = "https://api.hypixel.net/friends?uuid=" + get_mojang_UUID(player).uuid + "&key=" + self.api_key
             return Friends(fetch_and_get(url, file_name))
+
+    def get_recent_games(self, player):
+        file_name = "recent-" + get_mojang_UUID(player).uuid
+        cache.invalidate_five_minutes_cache(file_name)
+        if os.path.exists(cache_dir + file_name + ".json"):
+            return RecentGames(get_from_cache(file_name))
+        else:
+            url = "https://api.hypixel.net/recentgames?uuid=" + get_mojang_UUID(player).uuid + "&key=" + self.api_key
+            return RecentGames(fetch_and_get(url, file_name))
 
 
 def validate_status_code(request):
